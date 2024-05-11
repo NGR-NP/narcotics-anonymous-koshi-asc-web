@@ -32,7 +32,7 @@ export default function NavbarSection() {
           />
           <div>
             <p className="self-center font-serif text-base lg:text-xl xl:text-2xl  font-bold whitespace-nowrap">
-            Narcotics Anonymous
+              Narcotics Anonymous
             </p>
             <p className="self-center font-sans text-sm lg:text-base xl:text-lg font-semibold text-foreground/70 whitespace-nowrap">
               Koshi Area
@@ -46,7 +46,7 @@ export default function NavbarSection() {
           <div className="max-sm:hidden">
             <LanguageDropdown />
           </div>
-            <MobileNavlinkTriggerButton />
+          <MobileNavlinkTriggerButton />
         </div>
         <NavLinksComp />
       </div>
@@ -69,19 +69,23 @@ const LanguageDropdown = () => {
       </DropdownMenuTrigger>
 
       <DropdownMenuContent>
-        <DropdownMenuLabel>change language</DropdownMenuLabel>
+        <DropdownMenuLabel>language</DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>
-          <button
-            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white"
-            role="menuitem"
-          >
-            <div className="inline-flex items-center">
-              <ContryFlag code="us" />
-              En
-            </div>
-          </button>
-        </DropdownMenuItem>
+        {lang.map(({ name, code }) => {
+          return (
+            <DropdownMenuItem key={name}>
+              <button
+                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white"
+                role="menuitem"
+              >
+                <div className="inline-flex items-center">
+                  <ContryFlag code={code} />
+                  {name}
+                </div>
+              </button>
+            </DropdownMenuItem>
+          );
+        })}
       </DropdownMenuContent>
     </DropdownMenu>
   );
@@ -98,3 +102,18 @@ const ContryFlag = ({ code }: { code: string }) => {
     />
   );
 };
+
+const lang = [
+  {
+    name: 'english',
+    code: 'us',
+  },
+  {
+    name: 'नेपाली',
+    code: 'np',
+  },
+  {
+    name: 'np-en',
+    code: 'np',
+  },
+];

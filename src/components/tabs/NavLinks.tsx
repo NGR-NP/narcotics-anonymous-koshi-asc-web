@@ -35,6 +35,7 @@ const Links = [
     icon: <IconIdentificationCardSolid />,
   },
 ];
+const excludeLinks = ['/', '/events', '/meetings'];
 export default function NavLinksComp() {
   const pathname = usePathname();
   const { isOpen: isopen } = useContext(NavbarContext) as NavbarContextType;
@@ -57,21 +58,19 @@ export default function NavLinksComp() {
 
           const hideOnSmallScreen =
             link.href !== pathname
-              ? link.href === '/' ||
-                link.href === '/events' ||
-                link.href === '/meetings'
+              ? excludeLinks.includes(link.href)
                 ? 'hidden'
                 : 'block'
               : '';
           return (
             <li
               key={link.href}
-              className={`group hover:shadow-md md:shadow-sm  hover:text-accent-foreground  hover:bg-accent  ${hideOnSmallScreen} overflow-hidden`}
+              className={`group hover:shadow-md md:shadow-sm focus-visible:ring-ring focus-visible:outline-none focus-visible:ring-1 rounded-sm  hover:text-accent-foreground  hover:bg-accent  ${hideOnSmallScreen} overflow-hidden`}
             >
               <Link
                 href={link.href}
                 className={cn(
-                  'flex gap-2 py-2 items-center px-4 capitalize group-hover:text-accent-foreground  group-hover:bg-accent     md:active:scale-95   md:rounded max-lg:px-2 md:py-1  ',
+                  'flex gap-2 py-2 items-center  px-4 capitalize group-hover:text-accent-foreground  group-hover:bg-accent     md:active:scale-95   md:rounded max-lg:px-2 md:py-1  ',
                   active,
                 )}
               >
