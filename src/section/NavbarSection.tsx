@@ -6,38 +6,36 @@ import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import MobileNavlinkTriggerButton from '@/components/navigation/mobileNavlinkTriggerButton';
-import { useSearchParams } from 'next/navigation';
 import NavLinksComp from '@/components/tabs/NavLinks';
 import Link from 'next/link';
 
 export default function NavbarSection() {
   return (
-    <nav className="bg-background border-slate-200">
+    <nav className="bg-background shadow-md">
       <div className="max-w-screen-2xl flex flex-wrap items-center justify-between mx-auto p-4">
         <Link
           href="/"
-          className="flex items-center space-x-3 rtl:space-x-reverse"
+          className="flex z-50 items-center space-x-3 rtl:space-x-reverse"
         >
           <Image
             width={50}
             height={50}
             src={NaKoshiAscLogo}
-            className="h-12 w-12 rounded-full"
-            alt="Flowbite Logo"
+            className="h-10 w-10 lg:h-12 lg:w-12 xl:h-14 xl:w-14 rounded-full"
+            alt="NA koshi area service committee logo"
           />
           <div>
-            <p className="self-center font-serif text-2xl font-semibold whitespace-nowrap">
-              NA KOSHI
+            <p className="self-center font-serif text-base lg:text-xl xl:text-2xl  font-bold whitespace-nowrap">
+            Narcotics Anonymous
             </p>
-            <p className="self-center font-sans text-md font-semibold whitespace-nowrap">
-              Area Service Committee
+            <p className="self-center font-sans text-sm lg:text-base xl:text-lg font-semibold text-foreground/70 whitespace-nowrap">
+              Koshi Area
             </p>
           </div>
         </Link>
@@ -48,7 +46,7 @@ export default function NavbarSection() {
           <div className="max-sm:hidden">
             <LanguageDropdown />
           </div>
-          <MobileNavlinkTriggerButton />
+            <MobileNavlinkTriggerButton />
         </div>
         <NavLinksComp />
       </div>

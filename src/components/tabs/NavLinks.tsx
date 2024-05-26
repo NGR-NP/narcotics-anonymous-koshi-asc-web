@@ -1,52 +1,92 @@
 'use client';
 
-import { URLParams, cn } from '@/lib/utils';
+import { NavbarContext } from '@/app/(home)/Contextapi';
+import { cn } from '@/lib/utils';
+import { Boxes } from 'lucide-react';
 import Link from 'next/link';
-import { usePathname, useSearchParams } from 'next/navigation';
+import { usePathname } from 'next/navigation';
+import { useContext } from 'react';
+import { Button } from '../ui/button';
+import {
+  IconAboutUsSolid,
+  IconHomeSolid,
+  IconIdentificationCardSolid,
+} from '../Svg/svgicons';
 
 const Links = [
   {
     name: 'Home',
     href: '/',
+    icon: <IconHomeSolid />,
   },
   {
     name: 'About',
     href: '/about',
+    icon: <IconAboutUsSolid />,
   },
   {
     name: 'Committee',
     href: '/committee',
+    icon: <Boxes aria-hidden="true" />,
+  },
+  {
+    name: 'Contact',
+    href: '/contact',
+    icon: <IconIdentificationCardSolid />,
   },
 ];
 export default function NavLinksComp() {
   const pathname = usePathname();
-  const searchParams = useSearchParams();
-  const isOpen = Number(searchParams.get(URLParams.NAV_OPEN))
-    ? 'scale-100'
-    : 'hidden';
+  const { isOpen: isopen } = useContext(NavbarContext) as NavbarContextType;
+  const isOpen = isopen ? 'scale-100' : 'hidden';
 
   return (
-    // <div
-    //   className={cn(
-    //     'z-50  duration-1000 ease-out  items-center justify-between hidden w-full md:flex md:w-auto md:order-1',
-    //     isOpen,
-    //   )}
-    //   id="navbar-link"
-    // >
-       <div
-    className={cn("items-center z-50 justify-between bg-transparent w-full md:flex md:w-auto md:order-1", isOpen)}
-    id="navbar-link"
-  >
-      <ul className="flex flex-col font-medium p-4 md:p-0 mt-4 border bg-transparent dark:bg-transparent border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 border-border">
+    <div
+      className={cn(
+        'items-center z-50 justify-between bg-transparent w-full md:flex md:w-auto md:order-1',
+        isOpen,
+      )}
+      id="navbar-link"
+    >
+      <ul className="flex flex-col font-medium p-4 md:p-0 mt-4 max-sm:absolute  max-sm:w-full backdrop-blur-md border bg-transparent rounded-lg md:gap-4 md:flex-row md:mt-0 md:border-0 border-border">
         {Links.map((link) => {
-          const active = pathname === link.href && 'bg-secondary';
+          const active =
+            pathname === link.href &&
+            'bg-primary md:bg-primary text-white font-bold  dark:md:bg-primary';
+          console.log(pathname, link.href);
+
+          const hideOnSmallScreen =
+            link.href !== pathname
+              ? link.href === '/' ||
+                link.href === '/events' ||
+                link.href === '/meetings'
+                ? 'hidden'
+                : 'block'
+              : '';
           return (
-            <li key={link.href}>
+            <li
+              key={link.href}
+              className={`group hover:shadow-md md:shadow-sm  hover:text-accent-foreground  hover:bg-accent  ${hideOnSmallScreen} overflow-hidden`}
+            >
               <Link
                 href={link.href}
-                className={`block py-2 px-3 capitalize text-white hover:bg-primary/5  rounded md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-blue-500 ${active}`}
+                className={cn(
+                  'flex gap-2 py-2 items-center px-4 capitalize group-hover:text-accent-foreground  group-hover:bg-accent     md:active:scale-95   md:rounded max-lg:px-2 md:py-1  ',
+                  active,
+                )}
               >
-                {link.name}
+                <Button
+                  size={'icon'}
+                  className={cn(
+                    `bg-transparent w-4 h-4 max-lg:w-6 max-lg:h-6 text-inherit group-hover:text-accent-foreground group-hover:animate-slide-up-out-back-in  hover:bg-transparent `,
+
+                    pathname === link.href && 'text-white',
+                  )}
+                  asChild
+                >
+                  {link.icon}
+                </Button>{' '}
+                <p className="md:hidden lg:block">{link.name}</p>
               </Link>
             </li>
           );

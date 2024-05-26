@@ -1,35 +1,14 @@
 'use client';
-import { useSearchParams } from 'next/navigation';
-import { IconHandburgermenu } from '../Svg/svgicons';
-import { useRouter } from 'next/navigation';
-import { URLParams } from '@/lib/utils';
+import { IconHandburgermenu, IconX } from '../Svg/svgicons';
+import { useContext } from 'react';
+import { NavbarContext } from '@/app/(home)/Contextapi';
 
 export default function MobileNavlinkTriggerButton() {
-  // use search params to show and hide navlink
-  const searchParams = useSearchParams();
-  const isOpen = Number(searchParams.get(URLParams.NAV_OPEN));
-  const router = useRouter();
-  console.log('isOpen', isOpen);
+  const { isOpen, setIsOpen } = useContext(NavbarContext) as NavbarContextType;
+  const backdrop = isOpen ? 'fixed' : 'hidden';
   const openMobileNav = () => {
-    if (isOpen) {
-      const currentSearchParams = new URLSearchParams(searchParams.toString());
-      currentSearchParams.delete(URLParams.NAV_OPEN);
-      const updatedSearchParams = new URLSearchParams(
-        currentSearchParams.toString(),
-      );
-      // console.log('updatedSearchParams', currentSearchParams.toString()); // null
-      router.push(`?${updatedSearchParams.toString()}`);
-    } else {
-      const currentSearchParams = new URLSearchParams(searchParams.toString());
-      currentSearchParams.set(URLParams.NAV_OPEN, '1');
-      const updatedSearchParams = new URLSearchParams(
-        currentSearchParams.toString(),
-      );
-      // console.log('updatedSearchParams', currentSearchParams.toString());
-      router.push(`?${updatedSearchParams.toString()}`);
-    }
+    setIsOpen(!isOpen);
   };
-  const backdrop = isOpen ? 'absolute' : 'hidden';
   return (
     <button
       onClick={openMobileNav}
@@ -40,9 +19,10 @@ export default function MobileNavlinkTriggerButton() {
       <span className="sr-only">Open main menu</span>
       <div
         onClick={openMobileNav}
-        className={`top-0 left-0 h-full w-full bg-secondary blur-md -z-10 opacity-50 ${backdrop}`}
+        className={`top-0 left-0 h-full w-full  backdrop-blur-[1.5px] -z-10 ${backdrop}`}
       />
-      <IconHandburgermenu />
+      <IconHandburgermenu className={isOpen ? 'hidden' : 'block'} />
+      <IconX className={isOpen ? 'block' : 'hidden'} />
     </button>
   );
 }
