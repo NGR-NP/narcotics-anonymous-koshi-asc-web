@@ -3,7 +3,7 @@ import { getMettingLists } from '@/app/(home)/ui/action';
 import { cn } from '@/lib/utils';
 import Image from 'next/image';
 import { Card, CardContent } from '@/components/ui/card';
-import { Anchor, Clock, Map } from 'lucide-react';
+import { Clock, Map } from 'lucide-react';
 import { NA_LOGO } from '@/lib/utils';
 import { IconCalender, IconDot, IconLocation } from '@/components/Svg/svgicons';
 import { checkMeetingStatus } from '@/lib/metting-time-status';
@@ -40,13 +40,16 @@ const MettingCard = ({ item }: { item: MettingListType }) => {
     <Card className="max-w-[400px] cursor-pointer rounded-lg shadow-md hover:shadow-lg outline-none border-none text-secondary-card-foreground bg-secondary-card h-auto overflow-hidden">
       <CardContent className="divide-y-2 p-0">
         <div className="pb-3 max-sm:flex-col px-4 pt-5 z-10 w-full justify-start shrink-0 overflow-inherit color-inherit subpixel-antialiased rounded-t-large flex gap-3 items-start">
-          <Image
-            alt={`${item.name} logo`}
-            height={50}
-            width={50}
-            className="rounded-2xl"
-            src={item?.img || NA_LOGO}
-          />
+          <div className="flex justify-between max-sm:w-full">
+            <Image
+              alt={`${item.name} logo`}
+              height={50}
+              width={50}
+              className="rounded-2xl "
+              src={item?.img || NA_LOGO}
+            />
+            <p className='sm:hidden bg-accent text-accent-foreground h-fit px-2 py-1 text-sm'>{status.message}</p>
+          </div>
           <div className="flex flex-col gap-2 w-full">
             <div className="flex justify-between gap-3 items-center">
               <p className="text-md text-start line-clamp-2 font-sans font-bold ">
@@ -64,9 +67,7 @@ const MettingCard = ({ item }: { item: MettingListType }) => {
               <div className="flex  justify-between w-full gap-3 gap-y-1 gap-x-10 flex-wrap">
                 <li className="flex gap-1 items-center relative pl-4 group">
                   <IconLocation className="h-4 w-4 text-foreground/80 group-hover:text-foreground absolute top-1 -left-2" />
-                  <p className="text-base text-card-foreground">
-                    {item?.city}
-                  </p>
+                  <p className="text-base text-card-foreground">{item?.city}</p>
                 </li>
                 <li className="flex gap-1 items-center relative pl-4 group">
                   <IconCalender className="h-4 w-4 text-foreground/80 group-hover:text-foreground absolute top-1 -left-2 " />
