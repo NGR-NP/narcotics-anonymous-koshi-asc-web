@@ -1,5 +1,7 @@
 type NotificationType = 'Silent' | 'Ring' | 'default';
-interface SVGProp extends React.SVGProps<SVGSVGElement> {}
+interface SVGProp extends React.SVGProps<SVGSVGElement> {
+  solid?: boolean;
+}
 
 type MettingListType = {
   city: string;
@@ -19,3 +21,5 @@ type MettingListType = {
   gmap?: string;
   img?: string;
 };
+
+type SvgIconComponentType = React.ComponentType<React.SVGProps<SVGSVGElement>>;

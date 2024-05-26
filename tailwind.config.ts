@@ -71,10 +71,68 @@ const config = {
           from: { height: 'var(--radix-accordion-content-height)' },
           to: { height: '0' },
         },
+        'slide-up': {
+          '0%': { transform: 'translateY(200%)' },
+          '100%': { transform: 'translateY(0%)' },
+        },
+        'slide-down': {
+          '0%': { transform: 'translateY(-200%)' },
+        },
+        'fade-in': {
+          '0%': { opacity: '0' },
+          '100%': { opacity: '1' },
+        },
+        'fade-out': {
+          '0%': { opacity: '1' },
+          '100%': { opacity: '0' },
+        },
+        'slide-left': {
+          '0%': { transform: 'translateX(-100%)' },
+          '100%': { transform: 'translateX(0%)' },
+        },
+        'slide-right': {
+          '0%': { transform: 'translateX(100%)' },
+          '100%': { transform: 'translateX(0%)' },
+        },
+        'slide-left-out': {
+          '0%': { transform: 'translateX(0%)' },
+          '100%': { transform: 'translateX(-100%)' },
+        },
+        'slide-right-out': {
+          '0%': { transform: 'translateX(0%)' },
+          '100%': { transform: 'translateX(100%)' },
+        },
+        'slide-up-out': {
+          '0%': { transform: 'translateY(0%)' },
+          '100%': { transform: 'translateY(200%)' },
+        },
+        'slide-down-out': {
+          '0%': { transform: 'translateY(0%)' },
+          '100%': { transform: 'translateY(-200%)' },
+        },
+        'slide-up-out-back-in': {
+          '0%': { transform: 'translateY(0%)' },
+          '50%': { transform: 'translateY(-120%)' },
+          '51%': { transform: 'translateY(180%)' },
+          '100%': { transform: 'translateY(0%)' },
+        },
+        'slide-up-out-back-in-spring': {
+          '0%': { transform: 'translateY(0%)' },
+          '40%': { transform: 'translateY(-120%)' },
+          '41%': { transform: 'translateY(180%)' },
+          '81%': { transform: 'translateY(0%)' },
+          '88%': { transform: 'translateY(15%)' },
+          '94%': { transform: 'translateY(-10%)' },
+          '98%': { transform: 'translateY(5%)' },
+          '100%': { transform: 'translateY(0%)' },
+        },
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
+        'slide-up': 'slide-up 0.5s ease-out',
+        'slide-up-out-back-in': 'slide-up-out-back-in 0.5s ease-out',
+        'slide-up-out-back-in-spring': 'slide-up-out-back-in-spring 0.5s ease-out',
       },
     },
   },
