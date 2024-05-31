@@ -1,5 +1,4 @@
 import { getMettingLists } from '@/app/(home)/ui/action';
-// import MettingCard from '@/components/card/mettingCard';
 import { cn } from '@/lib/utils';
 import Image from 'next/image';
 import { Card, CardContent } from '@/components/ui/card';
@@ -9,6 +8,7 @@ import { IconCalender, IconDot, IconLocation } from '@/components/Svg/svgicons';
 import { checkMeetingStatus } from '@/lib/metting-time-status';
 import Link from 'next/link';
 import { ExternalLink } from '@/components/ui/ExternalLink';
+import React from 'react';
 
 interface MettingListProps {
   className?: string;
@@ -48,7 +48,9 @@ const MettingCard = ({ item }: { item: MettingListType }) => {
               className="rounded-2xl "
               src={item?.img || NA_LOGO}
             />
-            <p className='sm:hidden bg-accent text-accent-foreground h-fit px-2 py-1 text-sm'>{status.message}</p>
+            <p className="sm:hidden bg-accent text-accent-foreground h-fit px-2 py-1 text-sm">
+              {status.message}
+            </p>
           </div>
           <div className="flex flex-col gap-2 w-full">
             <div className="flex justify-between gap-3 items-center">
@@ -65,16 +67,8 @@ const MettingCard = ({ item }: { item: MettingListType }) => {
             </div>
             <ul className="flex justify-between flex-col w-full pl-1.5 gap-3 flex-wrap">
               <div className="flex  justify-between w-full gap-3 gap-y-1 gap-x-10 flex-wrap">
-                <li className="flex gap-1 items-center relative pl-4 group">
-                  <IconLocation className="h-4 w-4 text-foreground/80 group-hover:text-foreground absolute top-1 -left-2" />
-                  <p className="text-base text-card-foreground">{item?.city}</p>
-                </li>
-                <li className="flex gap-1 items-center relative pl-4 group">
-                  <IconCalender className="h-4 w-4 text-foreground/80 group-hover:text-foreground absolute top-1 -left-2 " />
-                  <time className="text-base text-card-foreground">
-                    {item?.day}
-                  </time>
-                </li>
+                <LionHeaders icon={IconLocation}>{item?.city}</LionHeaders>
+                <LionHeaders icon={IconCalender}>{item?.day}</LionHeaders>
               </div>
             </ul>
           </div>
@@ -82,25 +76,25 @@ const MettingCard = ({ item }: { item: MettingListType }) => {
 
         <div className="relative px-4 pb-5 flex w-full p-3 flex-auto flex-col place-content-inherit align-items-inherit h-auto break-words text-left overflow-y-auto subpixel-antialiased">
           <ul className="flex flex-col gap-y-2">
-            <li className="flex justify-between group items-start gap-2 w-full">
-              <div className="flex text-foreground/80 group-hover:text-foreground items-center gap-2">
+            <li className="flex justify-between text-foreground/80 group items-start gap-2 w-full">
+              <div className="flex  group-hover:text-foreground items-center gap-2">
                 <Clock size={18} /> time: &emsp;
               </div>
-              <time className="text-base text-foreground group-hover:text-foreground">
+              <time className="text-base group-hover:text-foreground">
                 <b>{item?.from}</b> to{' '}
                 <b>
                   {item.to} {item.time}
                 </b>
               </time>
             </li>
-            <li className="flex w-full max-sm:flex-col max-sm:items-stretch  group justify-between items-start gap-2">
-              <div className="flex text-foreground/80 group-hover:text-foreground items-center gap-2">
+            <li className="flex w-full text-foreground/80 max-sm:flex-col max-sm:items-stretch  group justify-between items-start gap-2">
+              <div className="flex group-hover:text-foreground items-center gap-2">
                 <Map size={18} /> {item?.gmap ? 'Direction' : 'Location'}:&emsp;
               </div>
               <ExternalLink
                 href={item.gmap}
                 icon="MapPinned"
-                className={`text-card-foreground line-clamp-2  group-hover:text-foreground/100  ${item?.gmap && 'underline focus-visible:underline'}`}
+                className={`line-clamp-2   group-hover:text-foreground ${item?.gmap && 'underline focus-visible:underline'}`}
               >
                 {item.location}
               </ExternalLink>
@@ -109,5 +103,18 @@ const MettingCard = ({ item }: { item: MettingListType }) => {
         </div>
       </CardContent>
     </Card>
+  );
+};
+interface LionHeadersProps {
+  icon: any;
+  children: string;
+}
+const LionHeaders = ({ children, icon }: LionHeadersProps) => {
+  const Icon = icon;
+  return (
+    <li className="flex gap-1 text-foreground/80 items-center relative pl-4 group">
+      <Icon className="h-4 w-4  group-hover:text-foreground absolute top-1 -left-2" />
+      <p className="text-base">{children}</p>
+    </li>
   );
 };
