@@ -7,7 +7,7 @@ export default function FooterCTAButton() {
   return (
     <>
       <Links
-        className="max-md:hidden hover:animate-bounce"
+        className="max-md:hidden hover:animate-bounce active:scale-95 p-0 m-0 active:animate-none"
         href="mail:nakoshiasc@gmail.com"
       >
         <Image
@@ -19,7 +19,7 @@ export default function FooterCTAButton() {
       </Links>
       <Links
         href="tel:+977-9704503606"
-        className="md:hidden right-3 animate-bounce -bottom-5"
+        className="md:hidden right-3 hover:animate-none hover:scale-105 active:scale-95 animate-bounce -bottom-5"
       >
         <Image
           className="-scale-100 rotate-90 "
