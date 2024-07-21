@@ -10,6 +10,12 @@ const nextConfig = {
       },
       {
         protocol: 'https',
+        hostname: '*.unsplash.com',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
         hostname: '**.wp.com',
         port: '',
         pathname: '/nacentralohio.org/wp-content/uploads/2018/05/**',

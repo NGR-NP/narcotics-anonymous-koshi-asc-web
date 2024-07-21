@@ -1,5 +1,4 @@
 'use client';
-import { NavbarContext } from '@/app/(home)/Contextapi';
 import {
   IconHomeSolid,
   IconTicketSolid,
@@ -10,7 +9,6 @@ import { cn } from '@/lib/utils';
 import { Slot } from '@radix-ui/react-slot';
 import { usePathname } from 'next/navigation';
 
-import { FC, useContext } from 'react';
 const links = [
   {
     name: 'Home',
@@ -34,14 +32,12 @@ const links = [
   },
 ];
 export default function BottomMobileNav() {
-  const { isOpen } = useContext(NavbarContext) as NavbarContextType;
   const pathname = usePathname();
 
   return (
     <div
       className={cn(
         'fixed  bottom-0 left-0 duration-200 ease-linear md:hidden z-50 w-full h-16 bg-secondary border-t border-border',
-        isOpen ? 'translate-y-16' : 'translate-y-0',
       )}
     >
       <div className="grid h-full max-w-lg grid-cols-4 mx-auto font-medium">

@@ -3,6 +3,8 @@ import React, { useEffect, useState } from 'react';
 import { BarChart, ChevronDown, GlobeIcon } from 'lucide-react';
 import { AnimatePresence, motion } from 'framer-motion';
 import Link from 'next/link';
+import { cn } from '@/lib/utils';
+import { usePathname } from 'next/navigation';
 
 export default function NavLinksComp() {
   return <Tabs />;
@@ -22,9 +24,9 @@ const Tabs = () => {
     setSelected(val);
   };
   return (
-    <div
+    <nav
       onMouseLeave={() => handleSetSelected(null)}
-      className="relative text-primary font-bold  flex h-fit gap-2"
+      className="relative text-primary hidden font-bold  md:flex h-fit gap-2"
     >
       {TABS.map((t) => {
         return (
@@ -32,7 +34,7 @@ const Tabs = () => {
             key={t.id}
             selected={selected}
             handleSetSelected={handleSetSelected}
-            tab={t.id}
+            tab={t}
             comp={t.Component}
           >
             {t.title}
@@ -43,28 +45,31 @@ const Tabs = () => {
       <AnimatePresence>
         {selected && <Content dir={dir} selected={selected} />}
       </AnimatePresence>
-    </div>
+    </nav>
   );
 };
 
 const Tab = ({ children, tab, handleSetSelected, selected, comp }: any) => {
+  const pathname = usePathname();
   return (
     <>
       {comp ? (
         <button
-          id={`shift-tab-${tab}`}
-          onMouseEnter={() => handleSetSelected(tab)}
-          onClick={() => handleSetSelected(tab)}
+          id={`shift-tab-${tab.id}`}
+          onMouseEnter={() => handleSetSelected(tab.id)}
+          onClick={() => handleSetSelected(tab.id)}
           className={`flex items-center gap-1 rounded-full px-3 py-1.5 text-sm transition-colors font-semibold ${
-            selected === tab
-              ? ' bg-muted text-secondary-foreground'
-              : 'text-muted-foreground'
+            tab.title === pathname
+              ? 'bg-primary text-white'
+              : selected === tab.id
+                ? 'bg-muted text-secondary-foreground'
+                : 'text-muted-foreground'
           }`}
         >
           <span>{children}</span>
           <ChevronDown
             className={`transition-transform ${
-              selected === tab ? 'rotate-180' : ''
+              selected === tab.id ? 'rotate-180' : ''
             }`}
           />
         </button>
@@ -97,7 +102,7 @@ const Content = ({ selected, dir }: any) => {
         opacity: 0,
         y: 8,
       }}
-      className="absolute left-0 top-[calc(100%_+_24px)] w-96 rounded-lg border border-border bg-gradient-to-b from-primary-foreground via-primary-foreground to-muted  p-4"
+      className="absolute z-10 left-0 top-[calc(100%_+_24px)] w-96 rounded-lg border border-border bg-gradient-to-b from-primary-foreground via-primary-foreground to-muted  p-4"
     >
       <Bridge />
       <Nub selected={selected} />
@@ -159,27 +164,61 @@ const Nub = ({ selected }: any) => {
       }}
       animate={{ left }}
       transition={{ duration: 0.25, ease: 'easeInOut' }}
-      className="absolute left-1/2 top-0 h-4 w-4 -translate-x-1/2 -translate-y-1/2 rotate-45 rounded-tl border border-neutral-600 bg-neutral-900"
+      className="absolute left-1/2 top-0 h-4 w-4 -translate-x-1/2 -translate-y-1/2 rotate-45 rounded-tl border border-border bg-secondary"
     />
   );
 };
 const MettingTypes = () => {
   return (
     <div className="grid grid-cols-2 gap-4 divide-x divide-secondary-foreground">
-      <Link
-        href="/metting/online"
-        className="flex w-full flex-col group items-center justify-center py-2 text-popover-foreground transition-colors "
-      >
-        <GlobeIcon className="mb-2 text-2xl text-indigo-300 group-hover:text-indigo-400" />
-      </Link>
-      <Link
-        href="/metting"
-        className="flex w-full flex-col group items-center justify-center py-2 text-popover-foreground transition-colors "
-      >
-        <BarChart className="mb-2 text-2xl text-indigo-300 group-hover:text-indigo-400" />
-        <span className="text-xs">Phycical Metting</span>
-      </Link>
+      <LinkMettingTypes
+        icon={GlobeIcon}
+        name="Online Metting"
+        link="/metting/online"
+      />
+      <LinkMettingTypes
+        icon={BarChart}
+        name="Phycical Metting"
+        link="/metting"
+      />
     </div>
+  );
+};
+interface LinkMettingTypesProp {
+  icon: any;
+  name: string;
+  link: string;
+  linkClass?: string;
+  iconClass?: string;
+  nameClass?: string;
+}
+const LinkMettingTypes = ({
+  icon,
+  link,
+  name,
+  iconClass,
+  linkClass,
+  nameClass,
+}: LinkMettingTypesProp) => {
+  const Icon = icon;
+  return (
+    <Link
+      href={link}
+      className={cn(
+        'flex w-full text-foreground/80 flex-col group items-center justify-center py-2 transition-colors ',
+        linkClass,
+      )}
+    >
+      <Icon
+        className={cn(
+          'mb-2 text-2xl text-indigo-300 group-hover:text-indigo-400',
+          iconClass,
+        )}
+      />
+      <span className={cn('text-xs  group-hover:text-foreground', nameClass)}>
+        {name}
+      </span>
+    </Link>
   );
 };
 

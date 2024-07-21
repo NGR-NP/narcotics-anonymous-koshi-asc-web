@@ -11,13 +11,13 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import MobileNavlinkTriggerButton from '@/components/navigation/mobileNavlinkTriggerButton';
-import NavLinksComp from '@/components/tabs/NavLinks';
+import NavLinksComp from '@/components/navigation/NavlinksComp';
 import Link from 'next/link';
+import MobileAsideNavLink from '@/components/navigation/MobileAsideNavLink';
 
 export default function NavbarSection() {
   return (
-    <nav className="bg-background shadow-md">
+    <header className="bg-background shadow-md">
       <div className="max-w-screen-2xl flex flex-wrap items-center justify-between mx-auto p-4">
         <Link
           href="/"
@@ -31,7 +31,7 @@ export default function NavbarSection() {
             alt="NA koshi area service committee logo"
           />
           <div>
-            <p className="self-center font-serif text-base lg:text-xl xl:text-2xl  font-bold whitespace-nowrap">
+            <p className="self-center font-serif max-[370px]:text-sm text-base lg:text-xl xl:text-2xl  font-bold whitespace-nowrap">
               Narcotics Anonymous
             </p>
             <p className="self-center font-sans text-sm lg:text-base xl:text-lg font-semibold text-foreground/70 whitespace-nowrap">
@@ -39,18 +39,19 @@ export default function NavbarSection() {
             </p>
           </div>
         </Link>
-        <div className="flex gap-4 items-center md:order-2 space-x-1 md:space-x-0 rtl:space-x-reverse">
-          <div className="max-sm:hidden">
+        <NavLinksComp />
+        <div className="flex gap-4 items-center space-x-1 md:space-x-0 rtl:space-x-reverse">
+          {/* <div className="max-sm:hidden"> */}
             <ToggleTheme />
-          </div>
+          {/* </div> */}
           <div className="max-sm:hidden">
             <LanguageDropdown />
           </div>
-          <MobileNavlinkTriggerButton />
+          <MobileAsideNavLink />
         </div>
-        <NavLinksComp />
+
       </div>
-    </nav>
+    </header>
   );
 }
 

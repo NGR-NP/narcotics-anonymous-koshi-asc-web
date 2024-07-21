@@ -1,6 +1,5 @@
 import ActivePathnameHighliter from '@/components/Footer/ActivePathnameHighliter';
 import FooterCTAButton from '@/components/FooterCTAButton';
-import Image from 'next/image';
 import Link from 'next/link';
 import { ReactNode } from 'react';
 

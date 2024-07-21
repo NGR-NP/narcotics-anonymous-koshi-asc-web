@@ -23,3 +23,9 @@ type MettingListType = {
 };
 
 type SvgIconComponentType = React.ComponentType<React.SVGProps<SVGSVGElement>>;
+
+type QuoteType = {
+  quote: string;
+  name: string;
+  title: string;
+};
